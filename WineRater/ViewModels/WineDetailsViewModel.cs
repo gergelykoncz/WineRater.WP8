@@ -1,5 +1,6 @@
 ﻿using WineRater.Entities;
 using WineRater.Facade;
+using WineRater.Infrastructure;
 
 namespace WineRater.ViewModels
 {
@@ -18,9 +19,15 @@ namespace WineRater.ViewModels
             Wine = _wineFacade.GetWine(wineId);
         }
 
+        public void SaveWine()
+        {
+            _wineFacade.SaveWine(Wine);
+        }
+
         public void DeleteWine()
         {
             _wineFacade.RemoveWine(Wine);
+            PubSub<Wine>.RaiseEvent(PubSubEventNames.WineDeleted, Wine);
         }
 
         public Wine Wine
@@ -39,5 +46,6 @@ namespace WineRater.ViewModels
                 }
             }
         }
+
     }
 }

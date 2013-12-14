@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using WineRater.Entities;
 using WineRater.Facade;
+using WineRater.Infrastructure;
 
 namespace WineRater.ViewModels
 {
@@ -13,6 +14,7 @@ namespace WineRater.ViewModels
         {
             this._wineFacade = wineFacade;
             fillListWithData();
+            PubSub<Wine>.RegisterForEvent(PubSubEventNames.WineDeleted, WineDeletedEventHandler);
         }
 
         public ObservableCollection<Wine> WineList
@@ -33,6 +35,11 @@ namespace WineRater.ViewModels
         {
             var wines = _wineFacade.GetAllWines();
             WineList = new ObservableCollection<Wine>(wines);
+        }
+
+        private void WineDeletedEventHandler(Wine wine)
+        {
+            WineList.Remove(wine);
         }
     }
 }

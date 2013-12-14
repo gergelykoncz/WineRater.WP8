@@ -30,9 +30,16 @@ namespace WineRater
             }
         }
 
+        protected void EditWine_Click(object sender, EventArgs e)
+        {
+            int wineId = Model.Wine.WineId;
+            NavigationService.Navigate(new Uri(string.Format("/SaveWinePage.xaml?selectedItem={0}", wineId ), UriKind.Relative));
+        }
+
         protected void DeleteWine_Click(object sender, EventArgs e)
         {
             Model.DeleteWine();
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
     }
 }

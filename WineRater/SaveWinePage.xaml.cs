@@ -2,25 +2,55 @@
 using Microsoft.Phone.Tasks;
 using System;
 using System.IO;
+using System.Windows.Navigation;
 using WineRater.Entities;
 using WineRater.Facade;
 using WineRater.IoC;
+using WineRater.ViewModels;
 
 namespace WineRater
 {
     public partial class SaveWinePage : PhoneApplicationPage
     {
         private byte[] _takenPhoto;
+        private readonly WineDetailsViewModel _viewModel;
 
         public SaveWinePage()
         {
             InitializeComponent();
+            _viewModel = IoCContainer.Get<WineDetailsViewModel>();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (DataContext == null)
+            {
+                string wineIdQueryParameter;
+                if (NavigationContext.QueryString.TryGetValue("selectedItem", out wineIdQueryParameter))
+                {
+                    int wineId = 0;
+                    if (int.TryParse(wineIdQueryParameter, out wineId))
+                    {
+                        _viewModel.SelectWine(wineId);
+                    }
+                }
+                else
+                {
+                    _viewModel.Wine = new Wine();
+                }
+
+                DataContext = _viewModel.Wine;
+            }
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            var facade = IoCContainer.Get<IWineFacade>();
-            facade.SaveWine(new Wine() { Name = wineName.Text, Rating = (int)rating.Value, Picture = _takenPhoto });
+            var wineToSave = this.DataContext as Wine;
+            if (_takenPhoto != null)
+            {
+                wineToSave.Picture = _takenPhoto;
+            }
+            _viewModel.SaveWine();
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 

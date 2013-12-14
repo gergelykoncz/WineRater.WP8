@@ -102,6 +102,8 @@
     <Compile Include="Facade\IWineFacade.cs" />
     <Compile Include="Facade\WineFacade.cs" />
     <Compile Include="Helpers\ByteImageValueConverter.cs" />
+    <Compile Include="Infrastructure\Notification.cs" />
+    <Compile Include="Infrastructure\PubSubEventNames.cs" />
     <Compile Include="IoC\IoCContainer.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="DetailsPage.xaml.cs">
@@ -121,6 +123,7 @@
     </Compile>
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Infrastructure\PubSub.cs" />
     <Compile Include="ViewModels\WineDetailsViewModel.cs" />
     <Compile Include="ViewModels\WineListViewModel.cs" />
   </ItemGroup>

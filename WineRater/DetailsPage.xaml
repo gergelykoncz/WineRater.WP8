@@ -43,7 +43,7 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton IconUri="/Assets/Images/edit.png" Text="Edit" />
+            <shell:ApplicationBarIconButton IconUri="/Assets/Images/edit.png" Text="Edit" Click="EditWine_Click" />
             <shell:ApplicationBarIconButton IconUri="/Assets/Images/delete.png" Text="Delete" Click="DeleteWine_Click" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
