@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Windows.Navigation;
 using WineRater.Entities;
-using WineRater.Facade;
 using WineRater.IoC;
 using WineRater.ViewModels;
 
@@ -53,7 +52,24 @@ namespace WineRater
                 wineToSave.Picture = _takenPhoto;
             }
             _viewModel.SaveWine();
-            
+            finishEdit();
+        }
+
+        protected void PhotoButton_Click(object sender, EventArgs e)
+        {
+            var task = new PhotoChooserTask();
+            task.ShowCamera = true;
+            task.Completed += task_Completed;
+            task.Show();
+        }
+
+        protected void CancelButton_Click(object sender, EventArgs e)
+        {
+            finishEdit();
+        }
+
+        private void finishEdit()
+        {
             if (_navigatedWineId.HasValue)
             {
                 string detailsPageUrl = string.Format("/DetailsPage.xaml?selectedItem={0}", _navigatedWineId.Value);
@@ -65,19 +81,15 @@ namespace WineRater
             }
         }
 
-        protected void PhotoButton_Click(object sender, EventArgs e)
-        {
-            var task = new PhotoChooserTask();
-            task.ShowCamera = true;
-            task.Completed += task_Completed;
-            task.Show();
-        }
-
         private void task_Completed(object sender, PhotoResult e)
         {
-            _takenPhoto = new byte[e.ChosenPhoto.Length];
-            var targetStream = new MemoryStream(_takenPhoto);
-            e.ChosenPhoto.CopyTo(targetStream);
+            if (e.ChosenPhoto != null)
+            {
+                //Copy the photo binary into a private byte array
+                _takenPhoto = new byte[e.ChosenPhoto.Length];
+                var targetStream = new MemoryStream(_takenPhoto);
+                e.ChosenPhoto.CopyTo(targetStream);
+            }
         }
     }
 }

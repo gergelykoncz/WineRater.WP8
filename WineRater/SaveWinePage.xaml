@@ -7,13 +7,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:helpers="clr-namespace:WineRater.Helpers"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
-
+    <phone:PhoneApplicationPage.Resources>
+        <helpers:ByteImageValueConverter x:Key="ByteImageValueConverter"/>
+    </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -45,14 +48,20 @@
             <toolkit:Rating Grid.Row="1" Grid.Column="1" Value="{Binding Rating, Mode=TwoWay}"></toolkit:Rating>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Type"/>
             <ListBox Grid.Row="2" Grid.Column="1" x:Name="wineType" SelectedValue="{Binding WineType, Mode=TwoWay}"></ListBox>
-            <Button Grid.Row="3" Grid.Column="1" Content="Take a picture" Click="PhotoButton_Click"></Button>
-            
+            <Button Grid.Row="3" Grid.Column="1" Click="PhotoButton_Click">
+                <StackPanel>
+                    <Image Source="{Binding Picture, Converter={StaticResource ByteImageValueConverter}}"></Image>
+                    <TextBlock Text="Take a picture"></TextBlock>
+                </StackPanel>
+            </Button>
+
         </Grid>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
             <shell:ApplicationBarIconButton IconUri="/Assets/Images/save.png" Text="Save" Click="SaveButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/Images/cancel.png" Text="Cancel" Click="CancelButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
