@@ -88,7 +88,7 @@ namespace WineRater.Entities
 
         private byte[] _picture;
 
-        [Column(DbType="image")]
+        [Column(DbType = "image", UpdateCheck = UpdateCheck.Never)]
         public byte[] Picture
         {
             get
@@ -108,7 +108,7 @@ namespace WineRater.Entities
 
         private DateTime _dateAdded;
 
-        public  DateTime DateAdded
+        public DateTime DateAdded
         {
             get
             {
@@ -124,6 +124,6 @@ namespace WineRater.Entities
                 }
             }
         }
-        
+
     }
 }

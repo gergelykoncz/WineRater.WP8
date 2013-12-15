@@ -36,9 +36,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Image Grid.Row="0" Grid.Column="0" Source="{Binding Picture, Converter={StaticResource ByteImageValueConverter}}"/>
             <toolkit:Rating Grid.Row="1" Grid.Column="0" Value="{Binding Rating}" ReadOnly="True"></toolkit:Rating>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding WineType}"></TextBlock>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>

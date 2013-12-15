@@ -37,12 +37,16 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"/>
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="wineName" Text="{Binding Name, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}"></TextBox>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Rating"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Take a picture" Click="PhotoButton_Click"></Button>
-            <toolkit:Rating Grid.Row="1" Grid.Column="1" x:Name="rating" Value="{Binding Rating, Mode=TwoWay}"></toolkit:Rating>
+            <toolkit:Rating Grid.Row="1" Grid.Column="1" Value="{Binding Rating, Mode=TwoWay}"></toolkit:Rating>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Type"/>
+            <ListBox Grid.Row="2" Grid.Column="1" x:Name="wineType" SelectedValue="{Binding WineType, Mode=TwoWay}"></ListBox>
+            <Button Grid.Row="3" Grid.Column="1" Content="Take a picture" Click="PhotoButton_Click"></Button>
+            
         </Grid>
     </Grid>
 

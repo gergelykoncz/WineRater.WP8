@@ -1,5 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Navigation;
 using WineRater.IoC;
 using WineRater.ViewModels;
@@ -30,6 +32,11 @@ namespace WineRater
             }
         }
 
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
         protected void EditWine_Click(object sender, EventArgs e)
         {
             int wineId = Model.Wine.WineId;
@@ -38,8 +45,11 @@ namespace WineRater
 
         protected void DeleteWine_Click(object sender, EventArgs e)
         {
-            Model.DeleteWine();
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            if (MessageBox.Show("Do you really want to delete?", "Confirm deletion", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                Model.DeleteWine();
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            }
         }
     }
 }

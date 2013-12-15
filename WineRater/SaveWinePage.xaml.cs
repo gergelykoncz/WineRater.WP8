@@ -14,11 +14,13 @@ namespace WineRater
     {
         private byte[] _takenPhoto;
         private readonly WineDetailsViewModel _viewModel;
+        private int? _navigatedWineId;
 
         public SaveWinePage()
         {
             InitializeComponent();
             _viewModel = IoCContainer.Get<WineDetailsViewModel>();
+            wineType.ItemsSource = Enum.GetValues(typeof(WineType));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -31,6 +33,7 @@ namespace WineRater
                     int wineId = 0;
                     if (int.TryParse(wineIdQueryParameter, out wineId))
                     {
+                        _navigatedWineId = wineId;
                         _viewModel.SelectWine(wineId);
                     }
                 }
@@ -38,7 +41,6 @@ namespace WineRater
                 {
                     _viewModel.Wine = new Wine();
                 }
-
                 DataContext = _viewModel.Wine;
             }
         }
@@ -51,7 +53,16 @@ namespace WineRater
                 wineToSave.Picture = _takenPhoto;
             }
             _viewModel.SaveWine();
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            
+            if (_navigatedWineId.HasValue)
+            {
+                string detailsPageUrl = string.Format("/DetailsPage.xaml?selectedItem={0}", _navigatedWineId.Value);
+                NavigationService.Navigate(new Uri(detailsPageUrl, UriKind.Relative));
+            }
+            else
+            {
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            }
         }
 
         protected void PhotoButton_Click(object sender, EventArgs e)
