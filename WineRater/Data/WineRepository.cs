@@ -16,7 +16,6 @@ namespace WineRater.Data
             if (_context.DatabaseExists() == false)
             {
                 _context.CreateDatabase();
-                SaveWine(new Wine() { Name = "Test", Rating = 5 });
             }
         }
 

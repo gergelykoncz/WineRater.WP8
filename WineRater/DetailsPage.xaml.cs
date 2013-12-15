@@ -10,7 +10,7 @@ namespace WineRater
 {
     public partial class DetailsPage : PhoneApplicationPage
     {
-        WineDetailsViewModel Model;
+        private WineDetailsViewModel _viewModel;
 
         public DetailsPage()
         {
@@ -25,9 +25,9 @@ namespace WineRater
                 if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
                 {
                     int index = int.Parse(selectedIndex);
-                    Model = IoCContainer.Get<WineDetailsViewModel>();
-                    Model.SelectWine(index);
-                    DataContext = Model;
+                    _viewModel = IoCContainer.Get<WineDetailsViewModel>();
+                    _viewModel.SelectWine(index);
+                    DataContext = _viewModel;
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace WineRater
 
         protected void EditWine_Click(object sender, EventArgs e)
         {
-            int wineId = Model.Wine.WineId;
+            int wineId = _viewModel.Wine.WineId;
             NavigationService.Navigate(new Uri(string.Format("/SaveWinePage.xaml?selectedItem={0}", wineId ), UriKind.Relative));
         }
 
@@ -47,7 +47,7 @@ namespace WineRater
         {
             if (MessageBox.Show("Do you really want to delete?", "Confirm deletion", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                Model.DeleteWine();
+                _viewModel.DeleteWine();
                 NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             }
         }

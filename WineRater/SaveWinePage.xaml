@@ -27,7 +27,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="Wine rater" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="enter a wine" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="save a wine" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -43,18 +43,17 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Wine.Name, Mode=TwoWay}"></TextBox>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Rating"/>
-            <toolkit:Rating Grid.Row="1" Grid.Column="1" Value="{Binding Rating, Mode=TwoWay}"></toolkit:Rating>
+            <toolkit:Rating Grid.Row="1" Grid.Column="1" Value="{Binding Path= Wine.Rating, Mode=TwoWay}"></toolkit:Rating>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Type"/>
-            <ListBox Grid.Row="2" Grid.Column="1" x:Name="wineType" SelectedValue="{Binding WineType, Mode=TwoWay}"></ListBox>
+            <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding WineTypes}" SelectedValue="{Binding Path= Wine.WineType, Mode=TwoWay}"></ListBox>
             <Button Grid.Row="3" Grid.Column="1" Click="PhotoButton_Click">
                 <StackPanel>
-                    <Image Source="{Binding Picture, Converter={StaticResource ByteImageValueConverter}}"></Image>
+                    <Image Source="{Binding Path= Wine.Picture, Converter={StaticResource ByteImageValueConverter}}"></Image>
                     <TextBlock Text="Take a picture"></TextBlock>
                 </StackPanel>
             </Button>
-
         </Grid>
     </Grid>
 

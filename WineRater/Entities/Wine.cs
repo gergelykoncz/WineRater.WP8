@@ -124,6 +124,5 @@ namespace WineRater.Entities
                 }
             }
         }
-
     }
 }

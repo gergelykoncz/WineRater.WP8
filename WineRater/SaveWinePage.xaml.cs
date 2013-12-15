@@ -11,7 +11,6 @@ namespace WineRater
 {
     public partial class SaveWinePage : PhoneApplicationPage
     {
-        private byte[] _takenPhoto;
         private readonly WineDetailsViewModel _viewModel;
         private int? _navigatedWineId;
 
@@ -19,7 +18,6 @@ namespace WineRater
         {
             InitializeComponent();
             _viewModel = IoCContainer.Get<WineDetailsViewModel>();
-            wineType.ItemsSource = Enum.GetValues(typeof(WineType));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,17 +38,12 @@ namespace WineRater
                 {
                     _viewModel.Wine = new Wine();
                 }
-                DataContext = _viewModel.Wine;
+                DataContext = _viewModel;
             }
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            var wineToSave = this.DataContext as Wine;
-            if (_takenPhoto != null)
-            {
-                wineToSave.Picture = _takenPhoto;
-            }
             _viewModel.SaveWine();
             finishEdit();
         }
@@ -86,9 +79,10 @@ namespace WineRater
             if (e.ChosenPhoto != null)
             {
                 //Copy the photo binary into a private byte array
-                _takenPhoto = new byte[e.ChosenPhoto.Length];
-                var targetStream = new MemoryStream(_takenPhoto);
+                byte[] takenPhoto = new byte[e.ChosenPhoto.Length];
+                var targetStream = new MemoryStream(takenPhoto);
                 e.ChosenPhoto.CopyTo(targetStream);
+                _viewModel.Wine.Picture = takenPhoto;
             }
         }
     }
