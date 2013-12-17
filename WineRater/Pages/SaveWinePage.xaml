@@ -16,6 +16,7 @@
     shell:SystemTray.IsVisible="True">
     <phone:PhoneApplicationPage.Resources>
         <helpers:ByteImageValueConverter x:Key="ByteImageValueConverter"/>
+        <helpers:LocalizedEnumValueConverter x:Key="LocalizedEnumValueConverter"/>
     </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -26,8 +27,8 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="Wine rater" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="save a wine" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="{Binding Path=LocalizedResources.SaveWinePageTitle, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -42,16 +43,18 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=LocalizedResources.SaveWinePageName, Source={StaticResource LocalizedStrings}}"/>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Wine.Name, Mode=TwoWay}"></TextBox>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Rating"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=LocalizedResources.SaveWinePageRating, Source={StaticResource LocalizedStrings}}"/>
             <toolkit:Rating Grid.Row="1" Grid.Column="1" Value="{Binding Path= Wine.Rating, Mode=TwoWay}"></toolkit:Rating>
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Type"/>
-            <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding WineTypes}" SelectedValue="{Binding Path= Wine.WineType, Mode=TwoWay}"></ListBox>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Path=LocalizedResources.SaveWinePageType, Source={StaticResource LocalizedStrings}}"/>
+            <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding WineTypes}" 
+                     SelectedValue="{Binding Path= Wine.WineType, Mode=TwoWay, Converter={StaticResource LocalizedEnumValueConverter}}">
+            </ListBox>
             <Button Grid.Row="3" Grid.Column="1" Click="PhotoButton_Click">
                 <StackPanel>
                     <Image Source="{Binding Path= Wine.Picture, Converter={StaticResource ByteImageValueConverter}}"></Image>
-                    <TextBlock Text="Take a picture"></TextBlock>
+                    <TextBlock Text="{Binding Path=LocalizedResources.SaveWinePageTakeAPicture, Source={StaticResource LocalizedStrings}}"></TextBlock>
                 </StackPanel>
             </Button>
         </Grid>
@@ -59,8 +62,6 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton IconUri="/Assets/Images/save.png" Text="Save" Click="SaveButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Assets/Images/cancel.png" Text="Cancel" Click="CancelButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

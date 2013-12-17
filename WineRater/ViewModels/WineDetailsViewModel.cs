@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using WineRater.Entities;
 using WineRater.Facade;
 using WineRater.Infrastructure;
+using WineRater.Resources;
 
 namespace WineRater.ViewModels
 {
@@ -9,6 +11,7 @@ namespace WineRater.ViewModels
     {
         private readonly IWineFacade _wineFacade;
         private Wine _wine;
+        private List<string> _wineTypes;
 
         public Wine Wine
         {
@@ -27,11 +30,19 @@ namespace WineRater.ViewModels
             }
         }
 
-        public Array WineTypes
+        public IEnumerable<string> WineTypes
         {
             get
             {
-                return Enum.GetValues(typeof(WineType));
+                if (_wineTypes == null)
+                {
+                    _wineTypes = new List<string>();
+                    foreach (var value in Enum.GetValues(typeof(WineType)))
+                    {
+                        _wineTypes.Add(LocalizedStrings.GetResourceForKey(string.Format("WineType{0}", value)));
+                    }
+                }
+                return _wineTypes;
             }
         }
         

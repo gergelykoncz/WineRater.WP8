@@ -1,10 +1,12 @@
 ﻿using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System;
 using System.IO;
 using System.Windows.Navigation;
 using WineRater.Entities;
 using WineRater.IoC;
+using WineRater.Resources;
 using WineRater.ViewModels;
 
 namespace WineRater
@@ -17,6 +19,7 @@ namespace WineRater
         public SaveWinePage()
         {
             InitializeComponent();
+            buildLocalizedApplicationBar();
             _viewModel = IoCContainer.Get<WineDetailsViewModel>();
         }
 
@@ -65,12 +68,12 @@ namespace WineRater
         {
             if (_navigatedWineId.HasValue)
             {
-                string detailsPageUrl = string.Format("/DetailsPage.xaml?selectedItem={0}", _navigatedWineId.Value);
+                string detailsPageUrl = string.Format("/Pages/DetailsPage.xaml?selectedItem={0}", _navigatedWineId.Value);
                 NavigationService.Navigate(new Uri(detailsPageUrl, UriKind.Relative));
             }
             else
             {
-                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
             }
         }
 
@@ -84,6 +87,19 @@ namespace WineRater
                 e.ChosenPhoto.CopyTo(targetStream);
                 _viewModel.Wine.Picture = takenPhoto;
             }
+        }
+
+        private void buildLocalizedApplicationBar()
+        {
+            ApplicationBarIconButton saveButton = new ApplicationBarIconButton(new Uri("/Assets/Images/Save.png", UriKind.Relative));
+            saveButton.Text = AppResources.AppBarSaveText;
+            saveButton.Click += SaveButton_Click;
+            ApplicationBar.Buttons.Add(saveButton);
+
+            ApplicationBarIconButton cancelButton = new ApplicationBarIconButton(new Uri("/Assets/Images/Cancel.png", UriKind.Relative));
+            cancelButton.Text = AppResources.AppBarCancelText;
+            cancelButton.Click += CancelButton_Click;
+            ApplicationBar.Buttons.Add(cancelButton);
         }
     }
 }

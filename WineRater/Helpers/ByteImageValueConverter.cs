@@ -12,11 +12,12 @@ namespace WineRater.Helpers
             if (value != null && value is byte[])
             {
                 byte[] bytes = value as byte[];
-                var stream = new MemoryStream(bytes);
-                var image = new BitmapImage();
-                image.SetSource(stream);
-
-                return image;
+                using (var stream = new MemoryStream(bytes))
+                {
+                    var image = new BitmapImage();
+                    image.SetSource(stream);
+                    return image;
+                }
             }
             return null;
         }

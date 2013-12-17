@@ -102,14 +102,15 @@
     <Compile Include="Facade\IWineFacade.cs" />
     <Compile Include="Facade\WineFacade.cs" />
     <Compile Include="Helpers\ByteImageValueConverter.cs" />
+    <Compile Include="Helpers\LocalizedEnumValueConverter.cs" />
     <Compile Include="Infrastructure\Notification.cs" />
     <Compile Include="Infrastructure\PubSubEventNames.cs" />
     <Compile Include="IoC\IoCContainer.cs" />
-    <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="DetailsPage.xaml.cs">
+    <Compile Include="Resources\LocalizedStrings.cs" />
+    <Compile Include="Pages\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,11 +119,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SaveWinePage.xaml.cs">
+    <Compile Include="Pages\SaveWinePage.xaml.cs">
       <DependentUpon>SaveWinePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ItemViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Infrastructure\PubSub.cs" />
     <Compile Include="ViewModels\WineDetailsViewModel.cs" />
     <Compile Include="ViewModels\WineListViewModel.cs" />
@@ -132,19 +131,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="DetailsPage.xaml">
+    <Page Include="Pages\DetailsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <DesignData Include="SampleData\MainViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </DesignData>
-    <Page Include="SaveWinePage.xaml">
+    <Page Include="Pages\SaveWinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,6 +150,8 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="WineRater_2013_12_17_11_36_39.sap" />
+    <None Include="WineRater_2013_12_17_11_40_03.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AlignmentGrid.png" />
@@ -213,7 +210,6 @@
     <Content Include="Assets\Tiles\IconicTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
